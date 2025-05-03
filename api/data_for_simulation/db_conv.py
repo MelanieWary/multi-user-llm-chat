@@ -1,11 +1,11 @@
 """Hardcoded conversations database for chat simulation"""
 from typing import List
 
-from api.common.data_models import UserMessage, PayloadAndDbObject
+from api.common.data_models import UserMessage, ChatPayloadAndDbObject
 
 
-DB_CONV: List[PayloadAndDbObject] = [
-    PayloadAndDbObject(
+DB_CONV: List[ChatPayloadAndDbObject] = [
+    ChatPayloadAndDbObject(
         session_id=1,
         conversation=[
             UserMessage(
@@ -50,7 +50,7 @@ DB_CONV: List[PayloadAndDbObject] = [
             ),
         ]
     ),
-    PayloadAndDbObject(
+    ChatPayloadAndDbObject(
         session_id=2,
         conversation=[
             UserMessage(
@@ -131,7 +131,7 @@ DB_CONV: List[PayloadAndDbObject] = [
             ),
         ]
     ),
-    PayloadAndDbObject(
+    ChatPayloadAndDbObject(
         session_id=3,
         conversation=[
             UserMessage(
@@ -188,7 +188,7 @@ DB_CONV: List[PayloadAndDbObject] = [
             ),
         ]
     ),
-    PayloadAndDbObject(
+    ChatPayloadAndDbObject(
         session_id=4,
         conversation=[
             UserMessage(
@@ -245,7 +245,7 @@ DB_CONV: List[PayloadAndDbObject] = [
             ),
         ]
     ),
-    PayloadAndDbObject(
+    ChatPayloadAndDbObject(
         session_id=5,
         conversation=[
             UserMessage(
@@ -302,7 +302,7 @@ DB_CONV: List[PayloadAndDbObject] = [
             ),
         ]
     ),
-    PayloadAndDbObject(
+    ChatPayloadAndDbObject(
         session_id=6,
         conversation=[
             UserMessage(
@@ -335,7 +335,7 @@ DB_CONV: List[PayloadAndDbObject] = [
             ),
         ]
     ),
-    PayloadAndDbObject(
+    ChatPayloadAndDbObject(
         session_id=7,
         conversation=[
             UserMessage(
@@ -380,7 +380,7 @@ DB_CONV: List[PayloadAndDbObject] = [
             ),
         ]
     ),
-    PayloadAndDbObject(
+    ChatPayloadAndDbObject(
         session_id=8,
         conversation=[
             UserMessage(
@@ -425,7 +425,7 @@ DB_CONV: List[PayloadAndDbObject] = [
             ),
         ]
     ),
-    PayloadAndDbObject(
+    ChatPayloadAndDbObject(
         session_id=9,
         conversation=[
             UserMessage(

@@ -1,11 +1,11 @@
 """Utils for multi-user chat"""
 from typing import Dict, List, Optional
 
-from api.common.constants import ASSISTANT_REMINDER_PROMPT
-from api.common.data_models import ContextUnit, PayloadAndDbObject, UserMessage, UserType
+from api.common.prompts import ASSISTANT_REMINDER_PROMPT
+from api.common.data_models import ContextUnit, ChatPayloadAndDbObject, UserMessage, UserType
 
 
-def make_conversation_from_payload(payload: PayloadAndDbObject) -> str:
+def make_conversation_from_payload(payload: ChatPayloadAndDbObject) -> str:
     conv = ""
     for user_message in payload.conversation:
         if conv != "":
@@ -15,7 +15,7 @@ def make_conversation_from_payload(payload: PayloadAndDbObject) -> str:
 
 
 def make_context_from_payload(
-        payload: PayloadAndDbObject,
+        payload: ChatPayloadAndDbObject,
         reminder: Optional[Dict] = ASSISTANT_REMINDER_PROMPT
 ) -> List[ContextUnit]:
     conv = make_conversation_from_payload(payload)
@@ -29,7 +29,7 @@ def make_context_from_payload(
     return context
 
 
-def append_message_to_payload(input_payload: PayloadAndDbObject, user_message: UserMessage):
+def append_message_to_payload(input_payload: ChatPayloadAndDbObject, user_message: UserMessage):
     """
     Add llm response (or new message) to conv
     """

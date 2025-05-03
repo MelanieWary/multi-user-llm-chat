@@ -19,6 +19,11 @@ class User(BaseModel):
     user_name: str
 
 
+class ChatSessionInfo(BaseModel):
+    session_id: int
+    nb_messages: int
+
+
 class UserMessage(BaseModel):
     user_id: int
     user_type: Optional[UserType] = UserType.NA
@@ -28,9 +33,14 @@ class UserMessage(BaseModel):
     nb_tokens: Optional[int] = 0
 
 
-class PayloadAndDbObject(BaseModel):
+class ChatPayloadAndDbObject(BaseModel):
     session_id: int
     conversation: List[UserMessage]
+
+
+class MessageRetrievalInputPayload(BaseModel):
+    session_id: int
+    message_id: int
 
 
 class ContextUnit(BaseModel):
