@@ -1,4 +1,5 @@
-"""Hardcoded users  database for chat simulation"""
+"""Hardcoded users database for chat simulation + for regular access to user data"""
+# TODO to be re^placed by a "real" DB
 from typing import List
 
 from api.common.constants import EMPLOYEE_NAME

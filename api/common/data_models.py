@@ -1,3 +1,4 @@
+"""App data models"""
 from enum import StrEnum
 
 from pydantic import BaseModel
@@ -46,7 +47,3 @@ class MessageRetrievalInputPayload(BaseModel):
 class ContextUnit(BaseModel):
     role: str
     content: str
-
-
-#Conversation -> List[UserMessage]
-#Context -> List[ContextUnit]
