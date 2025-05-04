@@ -1,8 +1,9 @@
 from dotenv import load_dotenv
 import uvicorn
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 
-from api.common.data_models import ChatPayloadAndDbObject, MessageRetrievalInputPayload, UserMessage, UserType
+from api.common.data_models import ChatPayloadAndDbObject
 from api.services import assistant_response as AssistantService
 from api.services import sessions as SessionsService
 from api.services import simulated_message as SimulationService
@@ -11,6 +12,14 @@ load_dotenv()
 
 app = FastAPI(
    swagger_ui_parameters={'tryItOutEnabled': True}
+)
+# Autoriser le front-end sur http://localhost:5500
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5500"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 

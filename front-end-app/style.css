@@ -1,0 +1,47 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+#chatBox {
+  margin-top: 20px;
+  border: 1px solid #393f86;
+  padding: 10px;
+  width: 500px;
+  background: #151880;
+}
+
+#messages {
+  height: 400px;
+  overflow-y: scroll;
+  border: 2px solid #191970;
+  padding: 5px;
+  margin-bottom: 10px;
+  background: #080838;
+}
+
+.message {
+  margin: 5px 0;
+}
+
+.message.customer { color: purple; }
+.message.employee { color: green; }
+.message.assistant { color: blue; }
+
+#sendArea {
+  display: flex;
+  gap: 10px;
+}
+
+#messageInput {
+  width: 400px;
+  background: #afdcec;
+}
+
+#getBtn {
+  background: #38acec;
+}
+
+#sendBtn {
+  background: #38acec;
+}
