@@ -29,16 +29,20 @@ how I managed and provided conv history to the LLM
 
 # Challenges faced
 * Windows 🙄
-* LLM not adressing the right user -> instructions in system prompt (maybe a bit drastic)
-* natural tone in general (would still need improvement), and specifically
-  * adressing users by their name -> instructions in system prompt, result not ideal but better
-  * say hello -> reminder prompt + PP
-  * not always answering -> reminder prompt
-  * saying "give me a moment for ...." -> instructions in system prompt
-* left unsolved:
-  * do not always answer when directly asked despite instruction in system prompt
-  * do not always answer when it could -- potential improvment through:
-    * ask LLM for message + proba of relevance -> control on the threshold to send (or not) the message
+* LLM:
+  * LLM not adressing the right user -> instructions in system prompt (maybe a bit drastic)
+  * natural tone in general (would still need improvement), and specifically
+    * adressing users by their name -> instructions in system prompt, result not ideal but better
+    * say hello -> reminder prompt + PP
+    * not always answering -> reminder prompt
+    * saying "give me a moment for ...." -> instructions in system prompt
+  * left unsolved:
+    * do not always answer when directly asked despite instruction in system prompt
+    * do not always answer when it could -- potential improvment through:
+      * ask LLM for message + proba of relevance -> control on the threshold to send (or not) the message
+* front-end:_
+  * everything ^^ --> architecture/flow that gathers a max of complexity in the back end
+  * For the first time, I could say "I have a CORS problem" -- for the first time too, I had a rough idea of what it meant -> CORS activated on back-end side
 
 
 # Not done yet / to be improved:

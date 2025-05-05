@@ -24,10 +24,6 @@ body {
   margin: 5px 0;
 }
 
-.message.customer { color: purple; }
-.message.employee { color: green; }
-.message.assistant { color: blue; }
-
 #sendArea {
   display: flex;
   gap: 10px;

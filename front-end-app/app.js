@@ -11,7 +11,6 @@ const messageInput = document.getElementById("messageInput");
 // Variables pour garder en mémoire la session en cours et le nombre de messages
 let currentSessionId = 0;
 let currentMessageId = 0;
-//let currentMessageCount = 0;
 
 /**
  * Fonction qui récupère la liste des sessions depuis l'API
@@ -30,24 +29,86 @@ async function loadSessions() {
 }
 
 /**
+ * Fonction qui affiche un message dans le chat
+ * @param {Object} msg - Un message du format attendu
+ */
+function displayMessage(msg) {
+  const div = document.createElement("div"); // Crée un élément <div>
+  console.log(div)
+  div.classList.add("message", `${msg.user_type}`); // Ajoute des classes CSS pour le style
+  div.textContent = `[${msg.user_type} - ${msg.user_name}] : ${msg.message}`; // Texte à afficher
+  if (msg.user_type === 'Customer') {
+    div.style.border = "1px solid white";
+    div.style.background = "purple";
+  }
+  if (msg.user_type === 'Employee') {
+    div.style.border = "1px solid white";
+    div.style.background = "green";
+  }
+  if (msg.user_type === 'Assistant') {
+    div.style.border = "1px solid white";
+    div.style.background = "yellow";
+  }
+  console.log(div)
+  messagesDiv.appendChild(div); // Ajoute le message à l'affichage
+  messagesDiv.scrollTop = messagesDiv.scrollHeight; // Scroll vers le bas automatiquement
+}
+
+/**
  * Funtion that retrives the nth message of a given session
  * @param {number} sessionId
  * @param {number} messageId
  */
 async function getMessage() {
-  const sessionId = parseInt(sessionSelect.value);
-  const messageId = currentMessageId;
+  let sessionId = parseInt(sessionSelect.value);
+  let messageId = currentMessageId;
   console.log(sessionId)
   console.log(messageId)
 
   const res = await fetch(`${API_BASE}/simulated_message/${sessionId}/${messageId}`);
-  const msgContent = await res.json(); // Conversion JSON
+  const msg = await res.json(); // Conversion JSON
   currentMessageId += 1;
-  console.log(currentMessageId)
-  const msg = msgContent.conversation[0]; // Récupère le message
-  console.log(msg);
-  displayMessage(msg); // Affiche le message dans la page
+  console.log(currentMessageId);
+  console.log("Message brut :", msg);
+  console.log(msg.conversation[0]);
+  if (msg.conversation && msg.conversation.length > 0) {
+    displayMessage(msg.conversation[0]); // Affiche le message dans la page
+    return msg.conversation[0];
+  } else {
+    console.warn("Pas de message dans la conversation.");
+  }
 }
+
+/**
+ * Fonction qui reset l'id de message
+ */
+ function resetMessageId() {
+  currentMessageId = 0;
+  return currentMessageId
+ }
+
+// une fonction send message qui envoie à l'endpoint avec le LLM
+// Get btn : récup un mocked message séquentiellement et l'affiche
+// send btn : si input vide, récup message mocké et l'envoie au LLM - si input non vide, envoie l'inout au LLM
+
+
+
+// Événement : quand on change la session dans la liste, on recharge les messages
+sessionSelect.addEventListener("change", () => {
+  messagesDiv.innerHTML = ""; // On vide l'affichage précédent
+  resetMessageId();
+});
+
+// Event: when we click on "Get" button, we excute getMessage
+getBtn.addEventListener("click", getMessage);
+
+// Événement : quand on clique sur "Envoyer", on exécute sendMessage
+//sendBtn.addEventListener("click", sendMessage);
+
+// Au démarrage, on charge les sessions disponibles
+loadSessions();
+
+
 
 /**
  * Fonction qui charge les messages d’une session donnée
@@ -72,17 +133,7 @@ async function getMessage() {
 //  }
 //}
 
-/**
- * Fonction qui affiche un message dans le chat
- * @param {Object} msg - Un message du format attendu
- */
-function displayMessage(msg) {
-  const div = document.createElement("div"); // Crée un élément <div>
-  div.classList.add("message", `user${msg.user_id}`); // Ajoute des classes CSS pour le style
-  div.textContent = `[${msg.user_type} - ${msg.user_id}] : ${msg.message}`; // Texte à afficher
-  messagesDiv.appendChild(div); // Ajoute le message à l'affichage
-  messagesDiv.scrollTop = messagesDiv.scrollHeight; // Scroll vers le bas automatiquement
-}
+
 
 ///**
 // * Fonction qui envoie un message à l'API, puis affiche la réponse automatique
@@ -121,17 +172,3 @@ function displayMessage(msg) {
 //  const botResponse = await res.json(); // Réponse de l’utilisateur 3 (automatique)
 //  displayMessage(botResponse.conversation[0]); // On affiche sa réponse
 //}
-
-// Événement : quand on change la session dans la liste, on recharge les messages
-sessionSelect.addEventListener("change", () => {
-  messagesDiv.innerHTML = ""; // On vide l'affichage précédent
-});
-
-// Event: when we click on "Get" button, we excute getMessage
-getBtn.addEventListener("click", getMessage);
-
-// Événement : quand on clique sur "Envoyer", on exécute sendMessage
-//sendBtn.addEventListener("click", sendMessage);
-
-// Au démarrage, on charge les sessions disponibles
-loadSessions();
