@@ -11,7 +11,7 @@ Sequence diagram [here](https://www.mermaidchart.com/app/projects/c4efd5c1-213b-
   * Set up the environment : ``$pip install -r requirements.txt``
   * To start the API: ``$python main.py`` (you can go to http://127.0.0.1:8000/docs to access it Swagger UI)
 * /front-end
-  * To start the front-end: ``$python -m http.server 5500``
+  * To start the front-end: ``$python -m http.server 5500`` for example
 
 
 # The LLM used, and why
