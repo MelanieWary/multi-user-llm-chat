@@ -1,13 +1,17 @@
 # The application
-Basic idea: simulated chat between the customer service ``Employee`` of a travel agency (named Tom), a Customer and Assistant Bob, the LLM who assists Tom.
-Sequence diagram: [here](https://www.mermaidchart.com/app/projects/c4efd5c1-213b-487e-ab6b-f5a2c2c60c03/diagrams/537b8f77-d121-4d31-ae29-a0ee7df9c6db/version/v0.1/edit)
+## What it is
+A simulated chat between the customer service ``Employee`` of a travel agency (named Tom), a Customer and Assistant Bob, the LLM who assists Tom.
+## What it does
+Sequence diagram [here](https://www.mermaidchart.com/app/projects/c4efd5c1-213b-487e-ab6b-f5a2c2c60c03/diagrams/537b8f77-d121-4d31-ae29-a0ee7df9c6db/version/v0.1/edit)
 
 
-# How to start the API and front-end
-* Create a .env from .env.dist file, and add your OpenAI api key
-* Create / activate your virtual env and set it up : ``$pip install -r requirements.txt``
-* To start the API: ``$python main.py`` (go to http://127.0.0.1:8000/docs to access it Swagger UI)
-* To start the front-end: ``$python -m http.server 5500`` (at the root of `/front-end-app` !)
+# How to start the app
+* /back-end
+  * Create a .env from .env.dist file, and add your OpenAI api key instead of current placeholder
+  * Set up the environment : ``$pip install -r requirements.txt``
+  * To start the API: ``$python main.py`` (you can go to http://127.0.0.1:8000/docs to access it Swagger UI)
+* /front-end
+  * To start the front-end: ``$python -m http.server 5500``
 
 
 # The LLM used, and why
@@ -30,29 +34,27 @@ Sequence diagram: [here](https://www.mermaidchart.com/app/projects/c4efd5c1-213b
   * To provide its full answer at once instead of saying e.g. "let me check if..." or "give me a moment for ..."
 
 # Management of conversation history
-Chat session history is managed and provided to the LLM :
-* stored in a "database", using a chat session_id -> each new message sent is stored in a (for now) dict object -> constitutes chat history (improvement: use a 'real' DB instead, e.g. Cassandra, often mentioned for storing chat history)
-* not all chat history is sent as context to the LLM, instead it is limited to a given number tokens or messages, or a given conversation duration (improvement: RAG, to add older messages that are relevant regarding the topic of the last message)
-* It is provided to the LLM as a dialog-like text, in the context ("input"), under the "role" `user` (as [this OpenAI feature](https://platform.openai.com/docs/guides/conversation-state#manually-manage-conversation-state) is not fitted for multi-user conversation)
+Chat session history is managed and provided to the LLM as follows:
+* stored in a "database" -> each new message sent to the API is stored in a (for now) array object, using a chat session_id as key -> constitutes chat history (improvement: use a 'real' DB instead, e.g. Cassandra, often mentioned for storing chat history)
+* not all chat history is sent as context to the LLM, instead it is limited to a configurable number of tokens and number of messages and conversation duration (improvement: RAG, to add older messages that are relevant regarding the topic of the last message)
+* It is provided to the LLM as a dialog-like text, in the context ("input"), under the "role" `user` ([this OpenAI feature](https://platform.openai.com/docs/guides/conversation-state#manually-manage-conversation-state) is not fitted for multi-user conversation)
 
 
 # Challenges faced
-* Windows 🙄
-* LLM:
+* Working on Windows 🙄
+* About the LLM responses (solution provided after the arrow `->`):
   * LLM not adressing the right user -> instructions in system prompt (maybe a bit drastic)
-  * LLM's natural tone in general (would still need improvement), and specifically
+  * LLM's natural tone in general (would still need improvement), and specifically:
     * adressing users by their name -> instructions in system prompt, result not ideal but better
     * saying hello -> reminder prompt + postprocessing
     * not always answering -> reminder prompt
     * saying "give me a moment for ..." -> instructions in system prompt
   * left unsolved:
     * do not always answer when directly asked despite instruction in system prompt
-    * do not always answer when it could -- to explore for potential improvement:
+    * do not always answer when it could -- ares for improvement to be explored:
       * ask LLM for message + probability of relevance -> control on the threshold to send (or not) the message
       * regex on input message to detect e.g. "Bob" or "assistant", and when regex detected, retry the LLM query until we get a message
-* front-end:
-  * everything ^^ --> architecture/flow that gathers a max of complexity in the back end
-  * For the first time, I could say "I have a CORS problem" -- for the first time too, I had a rough idea of what it meant -> CORS activated on back-end side
+* front-end: learning JS and work on front app still ongoing :)
 
 
 # Not done yet / to be improved:
@@ -68,6 +70,6 @@ Chat session history is managed and provided to the LLM :
 
 # Experience learning JavaScript
 I can't say I've learned it yet, though what I did is:
-* do 2 less than 1 hour tutorial on JS basics
+* do 2 less than 1 hour tutorials on JS basics
 * [ask ChatGPT](https://chatgpt.com/c/6817bdc7-43fc-8005-963d-398b7a70e730) to provide me with a project basis and to explain me what each line does
-* adapt this basis to the flow I had in mind (cf [sequence diagram](https://www.mermaidchart.com/app/projects/c4efd5c1-213b-487e-ab6b-f5a2c2c60c03/diagrams/537b8f77-d121-4d31-ae29-a0ee7df9c6db/version/v0.1/edit)), first by "trying things", and asking ChatGPT again when I got stuck
+* adapt this basis to the flow I had in mind (cf [sequence diagram](https://www.mermaidchart.com/app/projects/c4efd5c1-213b-487e-ab6b-f5a2c2c60c03/diagrams/537b8f77-d121-4d31-ae29-a0ee7df9c6db/version/v0.1/edit)), first by "trying things", then "trying other things", and eventually asking ChatGPT again when I got stuck

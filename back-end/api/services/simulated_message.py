@@ -2,7 +2,6 @@
 Now: retrieve simulated message (from employee and customer) from DB
 Future ?: Call LLM to simulate customer answer
 """
-from datetime import datetime
 
 from api.common.data_models import ChatPayloadAndDbObject, UserMessage, UserType
 from api.common.utils import get_timestamp, get_user_details

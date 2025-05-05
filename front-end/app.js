@@ -11,6 +11,7 @@ const messageInput = document.getElementById("messageInput");
 // Variables pour garder en mémoire la session en cours et le nombre de messages
 let currentSessionId = 0;
 let currentMessageId = 0;
+let msg = {};
 
 /**
  * Fonction qui récupère la liste des sessions depuis l'API
@@ -62,18 +63,19 @@ function displayMessage(msg) {
 async function getMessage() {
   let sessionId = parseInt(sessionSelect.value);
   let messageId = currentMessageId;
-  console.log(sessionId)
-  console.log(messageId)
+  console.log("Session id: ", sessionId)
+  console.log("Required message id: ", messageId)
 
   const res = await fetch(`${API_BASE}/simulated_message/${sessionId}/${messageId}`);
   const msg = await res.json(); // Conversion JSON
+  console.log("Raw message:", msg);
+  console.log("Conversation: ", msg.conversation[0]);
   currentMessageId += 1;
-  console.log(currentMessageId);
-  console.log("Message brut :", msg);
-  console.log(msg.conversation[0]);
+  console.log("Future message id: ", currentMessageId);
+
   if (msg.conversation && msg.conversation.length > 0) {
     displayMessage(msg.conversation[0]); // Affiche le message dans la page
-    return msg.conversation[0];
+    return msg;
   } else {
     console.warn("Pas de message dans la conversation.");
   }
@@ -84,11 +86,43 @@ async function getMessage() {
  */
  function resetMessageId() {
   currentMessageId = 0;
+  console.log("Message id reset to 0")
   return currentMessageId
  }
 
-// une fonction send message qui envoie à l'endpoint avec le LLM
-// Get btn : récup un mocked message séquentiellement et l'affiche
+// une fonction send message qui envoie à l'endpoint avec le LLM et display sa réponse
+async function getAssistantResponse() {
+  console.log("POST body :" + JSON.stringify(msg));
+
+  const userMessage = {
+    session_id: currentSessionId,
+    conversation: [
+      {
+        user_id: 2,
+        user_type: "Employee",
+        user_name: "Test",
+        timestamp: 0.0,
+        message: "Hello Bob, what's the weather in France? ",
+        nb_tokens: 0
+      }
+    ]
+  };
+
+  // Envoie du message à l’API (POST)
+  const res = await fetch(`${API_BASE}/assistant_message`, {
+    method: "POST",
+      headers: { "Content-Type": "application/json" },
+//      body: JSON.stringify(msg),
+      body: JSON.stringify(userMessage) // On convertit en JSON
+    });
+
+    const bobResponse = await res.json(); // Réponse de l’utilisateur 3 (automatique)
+    if (bobResponse.conversation && bobResponse.conversation.length > 0) {
+    displayMessage(bobResponse.conversation[0]); // Affiche le message dans la page
+  };
+  }
+
+
 // send btn : si input vide, récup message mocké et l'envoie au LLM - si input non vide, envoie l'inout au LLM
 
 
@@ -102,8 +136,8 @@ sessionSelect.addEventListener("change", () => {
 // Event: when we click on "Get" button, we excute getMessage
 getBtn.addEventListener("click", getMessage);
 
-// Événement : quand on clique sur "Envoyer", on exécute sendMessage
-//sendBtn.addEventListener("click", sendMessage);
+// Événement : quand on clique sur "Envoyer", on exécute getAssistantResponse
+sendBtn.addEventListener("click", getAssistantResponse());
 
 // Au démarrage, on charge les sessions disponibles
 loadSessions();

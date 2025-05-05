@@ -1,5 +1,5 @@
 .env
-.ipynb_checkpoints
+api/.ipynb_checkpoints
 *.ipynb
 explo
 *.png
