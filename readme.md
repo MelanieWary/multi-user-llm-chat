@@ -2,7 +2,7 @@
 ## What it is
 A simulated chat between the customer service ``Employee`` of a travel agency (named Tom), a Customer and Assistant Bob, the LLM who assists Tom.
 ## What it does
-Sequence diagram [here](https://www.mermaidchart.com/app/projects/c4efd5c1-213b-487e-ab6b-f5a2c2c60c03/diagrams/537b8f77-d121-4d31-ae29-a0ee7df9c6db/version/v0.1/edit)
+Sequence diagram [here](https://www.mermaidchart.com/raw/537b8f77-d121-4d31-ae29-a0ee7df9c6db?theme=light&version=v0.1&format=svg)
 
 
 # How to start the app
@@ -74,4 +74,4 @@ Chat session history is managed and provided to the LLM as follows:
 I can't say I've learned it yet, though what I did is:
 * do 2 less than 1 hour tutorials on JS basics
 * [ask ChatGPT](https://chatgpt.com/c/6817bdc7-43fc-8005-963d-398b7a70e730) to provide me with a project basis and to explain me what each line does
-* adapt this basis to the flow I had in mind (cf [sequence diagram](https://www.mermaidchart.com/app/projects/c4efd5c1-213b-487e-ab6b-f5a2c2c60c03/diagrams/537b8f77-d121-4d31-ae29-a0ee7df9c6db/version/v0.1/edit)), first by "trying things", then "trying other things", and eventually asking ChatGPT again when I got stuck
+* adapt this basis to the flow I had in mind (cf [sequence diagram](https://www.mermaidchart.com/raw/537b8f77-d121-4d31-ae29-a0ee7df9c6db?theme=light&version=v0.1&format=svg)), first by "trying things", then "trying other things", and eventually asking ChatGPT again when I got stuck
