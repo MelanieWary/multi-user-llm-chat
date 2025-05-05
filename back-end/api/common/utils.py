@@ -18,7 +18,7 @@ def get_customer_name(session_id:int) -> str:
         user_message.user_id for user_message in chat_session.conversation
         if (user_message.user_id != 0 and user_message.user_id != 1)
     ][0]
-    # get the customer one
+    # get the customer infos
     user_details = get_user_details(user_id=customer_id)
     return user_details.user_name
 

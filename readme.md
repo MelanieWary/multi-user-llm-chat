@@ -59,6 +59,7 @@ Chat session history is managed and provided to the LLM as follows:
 
 # Not done yet / to be improved:
 * Errors handling
+* Unit tests
 * Real DB for chat history and users (e.g. Cassandra or relational)
 * Adaptive personality -> possible ways:
   * pipeline with
@@ -67,6 +68,7 @@ Chat session history is managed and provided to the LLM as follows:
     * assistant tone passed in a new instruction in prompt
   * Chain of Thought: same steps, but done by the same LLM in a single request
 * front-end -> unfinished, and more than very simple for now as it is my first front-end development :) 
+
 
 # Experience learning JavaScript
 I can't say I've learned it yet, though what I did is:

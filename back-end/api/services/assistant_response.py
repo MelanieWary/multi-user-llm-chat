@@ -80,6 +80,9 @@ def get_history(
 
 
 def make_conversation_from_history(history: List[UserMessage]) -> str:
+    """
+    Make a dialog-like conversation from history
+    """
     conv = ""
     for user_message in history:
         if conv != "":
@@ -92,6 +95,7 @@ def make_context_from_history(
     history: List[UserMessage],
     reminder: Optional[Dict] = ASSISTANT_REMINDER_PROMPT
 ) -> List[ContextUnit]:
+    """Build the context to pass to the LLM from chat session history"""
     conv = make_conversation_from_history(history)
     logger.info(f"--------- Selected history: {conv}")  #TODO to delete
     context = [
@@ -105,6 +109,7 @@ def make_context_from_history(
 
 
 def get_assistant_response(payload: ChatPayloadAndDbObject):
+    """Return assistant (LLM) response to a chat session message"""
     session_id = payload.session_id
     message = payload.conversation[0]
 

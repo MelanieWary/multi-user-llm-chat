@@ -6,7 +6,6 @@ from typing import List, Optional
 
 from api.common.constants import DEFAULT_TIMESTAMP
 
-
 class UserType(StrEnum):
     ASSISTANT = "Assistant"
     EMPLOYEE = "Employee"

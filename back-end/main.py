@@ -13,7 +13,7 @@ load_dotenv()
 app = FastAPI(
    swagger_ui_parameters={'tryItOutEnabled': True}
 )
-# Autoriser le front-end sur http://localhost:5500
+# Authorize front-end on http://localhost:5500
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5500"],
@@ -29,7 +29,8 @@ app.add_middleware(
 @app.get("/session_ids")
 def get_session_ids():
     return SessionsService.get_session_ids()
-# TODO: to delete
+# TODO: not used, to delete (with the associated function)
+#  when the app is finished if it still not used
 
 
 @app.get("/sessions")

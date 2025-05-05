@@ -23,6 +23,7 @@ def query_llm(system_prompt:str, context: Union[str, List[ContextUnit]]):
         raise Exception
     return response
 
+
 # get llm encoding for token estimate
 # encoding = tiktoken.encoding_for_model(MODEL)  # model "gpt-4.1-nano"not found yet
 ENCODING = tiktoken.get_encoding("cl100k_base")
