@@ -1,36 +1,36 @@
-// Définition de l’URL de base de l’API
+// Definition of API base url
 const API_BASE = "http://localhost:8000";
 
-// Sélection des éléments HTML pour interagir avec eux
+// Selection of HTML elements to interact with them
 const sessionSelect = document.getElementById("sessionSelect");
 const messagesDiv = document.getElementById("messages");
 const simulateBtn = document.getElementById("simulateBtn");
 const messageInput = document.getElementById("messageInput");
 
-// Variables pour garder en mémoire la session en cours et le nombre de messages
+// Variables to keep in memory: current session, current message ID, and last message received.
 let currentSessionId = 0;
 let currentMessageId = 0;
 let lastMessage = null;
 
 /**
- * Fonction qui récupère la liste des sessions depuis l'API
- * et les ajoute dans la liste déroulante.
+ * Function to get available sessions from API
+ * and display them in the dropdown
  */
 async function loadSessions() {
-  const res = await fetch(`${API_BASE}/sessions`); // Appel API
-  const sessions = await res.json(); // Conversion JSON
+  const res = await fetch(`${API_BASE}/sessions`); // API call
+  const sessions = await res.json(); // JSON conversion
 
   sessions.forEach(session => {
-    const option = document.createElement("option"); // Création d'une option <option>
-    option.value = session.session_id; // Valeur = ID de la session
-    option.textContent = `Session ${session.session_id} (${session.nb_messages} msg)`; // Texte lisible
-    sessionSelect.appendChild(option); // Ajout à la liste déroulante
+    const option = document.createElement("option"); // Creation of a session option <option>
+    option.value = session.session_id; // Set option value to session ID
+    option.textContent = `Session ${session.session_id} (${session.nb_messages} msg)`; // Set text to display for the option
+    sessionSelect.appendChild(option); // Add to dropdown
   });
 }
 
 /**
- * Fonction qui affiche un message dans le chat
- * @param {Object} msg - Un message du format attendu
+ * Function that display a message in the chat box
+ * @param {Object} msg
  */
 function displayMessage(msg) {
 
@@ -38,43 +38,44 @@ function displayMessage(msg) {
     // If message is empty, do nothing
     return;
   }
-
-  const div = document.createElement("div"); // Crée un élément <div>
-  div.classList.add("message", `${msg.user_type}`); // Ajoute des classes CSS pour le style
-  div.textContent = `[${msg.user_type} - ${msg.user_name}] : ${msg.message}`; // Texte à afficher
-  messagesDiv.appendChild(div); // Ajoute le message à l'affichage
-  messagesDiv.scrollTop = messagesDiv.scrollHeight; // Scroll vers le bas automatiquement
+  // else:
+  const div = document.createElement("div"); // Create a <div> element
+  div.classList.add("message", `${msg.user_type}`); // Add CSS classes linked to user_type for style
+  div.textContent = `[${msg.user_type} - ${msg.user_name}] : ${msg.message}`; // Text to display
+  messagesDiv.appendChild(div); // Add message to chat box
+  messagesDiv.scrollTop = messagesDiv.scrollHeight; // Auto scroll down
 }
 
 /**
- * Funtion that retrives the nth message of a given session
+ * Funtion that retrieves and display the message of a given id from the current session,
+ * and then retrieves and display assistant response to this message
  * @param {number} sessionId
  * @param {number} messageId
  */
 async function getMessage() {
-  let sessionId = parseInt(sessionSelect.value);
-  let messageId = currentMessageId;
+  let sessionId = parseInt(sessionSelect.value); // Selected session ID
+  let messageId = currentMessageId; // Message ID to retrieve
   console.log("Session id: ", sessionId)
   console.log("Required message id: ", messageId)
 
-  const res = await fetch(`${API_BASE}/simulated_message/${sessionId}/${messageId}`);
-  const msg = await res.json(); // Conversion JSON
+  const res = await fetch(`${API_BASE}/simulated_message/${sessionId}/${messageId}`); // API call
+  const msg = await res.json(); // JSON conversion
   console.log("Raw message:", msg);
   console.log("Conversation: ", msg.conversation[0]);
-  currentMessageId += 1;
+  currentMessageId += 1; // increment message ID for next round
   console.log("Future message id: ", currentMessageId);
 
   if (msg.conversation && msg.conversation.length > 0) {
-    displayMessage(msg.conversation[0]); // Affiche le message dans la page
-    lastMessage = msg;
-    await getAssistantResponse();
+    displayMessage(msg.conversation[0]); // Display message, if any
+    lastMessage = msg; // Keep in memory message used for the API call to assistant
+    await getAssistantResponse(); // API call to get assistant response
   } else {
     console.warn("Pas de message dans la conversation.");
   }
 }
 
 /**
- * Fonction qui reset l'id de message
+ * Function that resets message ID and last message
  */
  function resetMessageId() {
   currentMessageId = 0;
@@ -83,25 +84,28 @@ async function getMessage() {
   return currentMessageId
  }
 
-// une fonction send message qui envoie à l'endpoint avec le LLM et display sa réponse
+/**
+ * Function that sends last message to retrieve assistant response, and display this latter
+ */
 async function getAssistantResponse() {
 
   if (lastMessage === null) {
+    // If last message is empty, do nothing
     return;
   }
-
+  // else:
   let msg = lastMessage;
 
-  // Envoie du message à l’API (POST)
+  // API call
   const res = await fetch(`${API_BASE}/assistant_message`, {
     method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(msg),
     });
 
-    const bobResponse = await res.json(); // Bob response
+    const bobResponse = await res.json(); // JSON conversion of Bob response
     if (bobResponse.conversation && bobResponse.conversation.length > 0) {
-    displayMessage(bobResponse.conversation[0]); // Display message
+    displayMessage(bobResponse.conversation[0]); // Display Bob response
   };
   }
 
