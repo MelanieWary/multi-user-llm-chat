@@ -8,34 +8,51 @@ body {
   border: 1px solid #393f86;
   padding: 10px;
   width: 500px;
-  background: #151880;
+  background: #080838;
 }
 
 #messages {
   height: 400px;
   overflow-y: scroll;
-  border: 2px solid #191970;
   padding: 5px;
   margin-bottom: 10px;
-  background: #080838;
+
 }
 
 .message {
   margin: 5px 0;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.Customer {
+    background-color: #d8d8d8;
+    margin-right: 50px;
+}
+
+.Employee {
+    background-color: #aeb9cc;
+    margin-left: 50px;
+}
+
+.Assistant {
+    background-color: #39ff5a;
 }
 
 #sendArea {
   display: flex;
   gap: 10px;
+  margin-bottom: 10px;
 }
 
 #messageInput {
-  width: 400px;
+  width: 450px;
   background: #afdcec;
 }
 
-#getBtn {
+#simulateBtn {
   background: #38acec;
+  width: 100%;
 }
 
 #sendBtn {

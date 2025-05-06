@@ -14,6 +14,13 @@ Sequence diagram [here](https://www.mermaidchart.com/raw/537b8f77-d121-4d31-ae29
   * To start the front-end: ``$python -m http.server 5500`` for example
 
 
+# How to use the app
+* Go to http://localhost:5500/ 
+* Select a chat session
+* Click on simulate to get and display the first message (from Employee Tom or the Customer), and Assistant Bob's response (if any)
+* Click again on simulate, for the next round of message(s)... and so on
+
+
 # The LLM used, and why
 * I used OpenAI `gpt-4.1-nano` because:
   * OpenAI models are known to be efficient, and there are a lot a ressources about how to use them
