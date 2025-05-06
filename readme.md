@@ -67,6 +67,7 @@ Chat session history is managed and provided to the LLM as follows:
 # Not done yet / to be improved:
 * Errors handling
 * Unit tests
+* Use Docker to share the application
 * Real DB for chat history and users (e.g. Cassandra or relational)
 * Adaptive personality -> possible ways:
   * pipeline with
