@@ -1,6 +1,9 @@
 # The application
 ## What it is
-A simulated chat between the customer service ``Employee`` of a travel agency (named Tom), a Customer and Assistant Bob, the LLM who assists Tom.
+A simulated chat between:
+* the customer service **Employee** of a travel agency, named **Tom**,
+* a **Customer**, 
+* and **Assistant Bob**, the LLM who assists Tom.
 ## What it does
 Sequence diagram [here](https://www.mermaidchart.com/raw/537b8f77-d121-4d31-ae29-a0ee7df9c6db?theme=light&version=v0.1&format=svg)
 
@@ -17,7 +20,7 @@ Sequence diagram [here](https://www.mermaidchart.com/raw/537b8f77-d121-4d31-ae29
 # How to use the app
 * Go to http://localhost:5500/ 
 * Select a chat session
-* Click on simulate to get and display the first message (from Employee Tom or the Customer), and Assistant Bob's response (if any)
+* Click on the `Simulate` button to get and display the first message (from Employee Tom or the Customer), followed by Assistant Bob's response (if any)
 * Click again on simulate, for the next round of message(s)... and so on
 
 
@@ -26,7 +29,7 @@ Sequence diagram [here](https://www.mermaidchart.com/raw/537b8f77-d121-4d31-ae29
   * OpenAI models are known to be efficient, and there are a lot a ressources about how to use them
   * no need for a reasoning model here
   * `gpt-4.1-nano` just came out, and it's presented as their fastest (and cheapest) model, that delivers good performance at generating answers following various instructions, and has a large context window (1 million tokens), which seems particularly suited for this chat app.
-  * also... "OpenAI’s API conveniently lets us provide the name of the participant for each message in the conversation" according to this [post](https://towardsdatascience.com/ai-for-groups-build-a-multi-user-chat-assistant-using-7b-class-models-7071ca8b4aa0/), though I ended up using OpenAI tools that do not implement this feature ^^ 
+  * also... "_OpenAI’s API conveniently lets us provide the name of the participant for each message in the conversation_" according to this [post](https://towardsdatascience.com/ai-for-groups-build-a-multi-user-chat-assistant-using-7b-class-models-7071ca8b4aa0/); this guided my choice, though I ended up using OpenAI tools that do not implement this feature ^^ 
 * I used their [Responses](https://platform.openai.com/docs/api-reference/responses) API to query the LLM (see this [comparison](https://platform.openai.com/docs/guides/responses-vs-chat-completions?api-mode=responses) with Chat Completions API)
 
 
@@ -42,8 +45,8 @@ Sequence diagram [here](https://www.mermaidchart.com/raw/537b8f77-d121-4d31-ae29
 
 # Management of conversation history
 Chat session history is managed and provided to the LLM as follows:
-* stored in a "database" -> each new message sent to the API is stored in a (for now) array object, using a chat session_id as key -> constitutes chat history (improvement: use a 'real' DB instead, e.g. Cassandra, often mentioned for storing chat history)
-* not all chat history is sent as context to the LLM, instead it is limited to a configurable number of tokens and number of messages and conversation duration (improvement: RAG, to add older messages that are relevant regarding the topic of the last message)
+* It is stored in a "database" -> each new message sent to the API is stored in a (for now) dict object, using a chat session_id as key -> it constitutes chat history (improvement: use a 'real' DB instead, e.g. Cassandra, often mentioned for storing chat history)
+* Not whole chat history is sent as context to the LLM, instead it is limited to a configurable number of tokens and number of messages and conversation duration (improvement: RAG, to add older messages that are relevant regarding the topic of the last message)
 * It is provided to the LLM as a dialog-like text, in the context ("input"), under the "role" `user` ([this OpenAI feature](https://platform.openai.com/docs/guides/conversation-state#manually-manage-conversation-state) is not fitted for multi-user conversation)
 
 
@@ -82,4 +85,4 @@ Chat session history is managed and provided to the LLM as follows:
 I can't say I've learned it yet, though what I did is:
 * do 2 less than 1 hour tutorials on JS basics
 * [ask ChatGPT](https://chatgpt.com/c/6817bdc7-43fc-8005-963d-398b7a70e730) to provide me with a project basis and to explain me what each line does
-* adapt this basis to the flow I had in mind (cf [sequence diagram](https://www.mermaidchart.com/raw/537b8f77-d121-4d31-ae29-a0ee7df9c6db?theme=light&version=v0.1&format=svg)), first by "trying things", then "trying other things", and eventually asking ChatGPT again when I got stuck
+* adapt this basis to the flow I had in mind (cf [sequence diagram](https://www.mermaidchart.com/raw/537b8f77-d121-4d31-ae29-a0ee7df9c6db?theme=light&version=v0.1&format=svg)), first by "trying things", then "trying other things", using the console when problems arised, and eventually asking ChatGPT again when I got stuck
