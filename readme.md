@@ -8,7 +8,7 @@ Sequence diagram [here](https://www.mermaidchart.com/raw/537b8f77-d121-4d31-ae29
 # How to start the app
 * /back-end
   * Create a .env from .env.dist file, and add your OpenAI api key instead of current placeholder
-  * Set up the environment : ``$pip install -r requirements.txt``
+  * Set up the environment (Python 3.13) : ``$pip install -r requirements.txt``
   * To start the API: ``$python main.py`` (you can go to http://127.0.0.1:8000/docs to access it Swagger UI)
 * /front-end
   * To start the front-end: ``$python -m http.server 5500`` for example
