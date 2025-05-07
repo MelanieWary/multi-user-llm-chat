@@ -60,10 +60,11 @@ Chat session history is managed and provided to the LLM as follows:
     * not always answering -> reminder prompt
     * saying "give me a moment for ..." -> instructions in system prompt
   * left unsolved:
-    * do not always answer when directly asked despite instruction in system prompt
-    * do not always answer when it could -- ares for improvement to be explored:
+    * it does not always answer when directly asked despite instruction in system prompt
+    * it does not always answer when it could, and sometimes answers when it should not -- areas for improvement to be explored:
       * ask LLM for message + probability of relevance -> control on the threshold to send (or not) the message
       * regex on input message to detect e.g. "Bob" or "assistant", and when regex detected, retry the LLM query until we get a message
+    * it does not always use the right format for "(nothing relevant)" (e.g. no ``()``) -> check if there is a recommended way to deal with that, or try using tags (e.g. markdown or html tags)
 * front-end: learning JS and work on front app still ongoing :)
 
 
