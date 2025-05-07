@@ -5,13 +5,6 @@ from api.data_for_simulation.db_conv import DB_CONV
 from api.common.data_models import ChatSessionInfo
 
 
-def get_session_ids() -> List[int]:
-    """
-    Get all session ids
-    """
-    return [db_object.session_id for db_object in DB_CONV]
-
-
 def get_sessions_info() -> List[ChatSessionInfo]:
     """Get all chat sessions and associated infos"""
     sessions:List[ChatSessionInfo] = []

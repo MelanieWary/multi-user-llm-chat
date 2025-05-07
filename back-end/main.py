@@ -26,13 +26,6 @@ app.add_middleware(
 # TODO: endpoint init session that (re)set working_conv_db ??
 
 
-@app.get("/session_ids")
-def get_session_ids():
-    return SessionsService.get_session_ids()
-# TODO: not used, to delete (with the associated function)
-#  when the app is finished if it still not used
-
-
 @app.get("/sessions")
 def get_sessions():
     return SessionsService.get_sessions_info()

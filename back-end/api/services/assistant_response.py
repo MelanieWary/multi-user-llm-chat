@@ -172,7 +172,7 @@ def get_assistant_response(payload: ChatPayloadAndDbObject):
             user_name=ASSISTANT_NAME,
             user_id=0,
             timestamp=get_timestamp(),
-            message="NOT TO DISPLAY -- issue with LLM",
+            message="Hum, I can't be reached... Maybe you did not provide your OpenAI API key? Otherwise, please check the logs !",
         )
 
     output_payload = ChatPayloadAndDbObject(
